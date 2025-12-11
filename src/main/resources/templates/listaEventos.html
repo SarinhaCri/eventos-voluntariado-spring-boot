@@ -52,7 +52,7 @@
             <div th:each="evento : ${eventos}" class="event-card">
                 
                 <div class="event-image-container">
-                    <img th:src="${evento.imageUrl != null ? evento.imageUrl : '/images/placeholder.jpg'}" 
+                    <img th:src="${evento.imageUrl != null ? evento.imageUrl : '../../imagens/placeholder.jpg'}" 
                          th:alt="'Imagem do evento ' + ${evento.nome}"
                          class="event-image">
                 </div>
