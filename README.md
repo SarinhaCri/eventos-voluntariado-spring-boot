@@ -7,7 +7,7 @@
 
 ## ✨ Sobre o Projeto
 
-O **[Nome do Seu Projeto]** é uma solução robusta para **gestão de eventos de extensão e o recrutamento de voluntários**. Desenvolvido com uma arquitetura moderna Full-Stack em Java, o sistema é projetado para ser intuitivo, seguro e visualmente atraente, unificando a experiência do voluntário e a eficiência do administrador.
+O Projeto de Extensão — Plataforma de Eventos e Voluntariado Comunitário é uma solução robusta para **gestão de eventos de extensão e o recrutamento de voluntários**. Desenvolvido com uma arquitetura moderna Full-Stack em Java, o sistema é projetado para ser intuitivo, seguro e visualmente atraente, unificando a experiência do voluntário e a eficiência do administrador.
 
 ### 🎯 Destaques Técnicos e Visuais
 
