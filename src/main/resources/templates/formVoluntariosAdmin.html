@@ -1,0 +1,43 @@
+<!DOCTYPE html> 
+<html xmlns:th="http://www.thymeleaf.org">
+     <head> 
+        <meta charset="UTF-8"> 
+        <title>Editar Voluntário</title> 
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    </head> 
+    <body> 
+        <header> <h1>Editar Voluntário</h1> 
+            <a th:href="@{/admin/voluntarios}">Voltar para a Lista</a> 
+        </header>
+<main>
+    <form th:action="@{/admin/voluntarios/salvar}" th:object="${voluntario}" method="POST">
+
+        <input type="hidden" th:field="*{id}" />
+
+        <div>
+            <label for="nome">Nome Completo:</label>
+            <input type="text" id="nome" th:field="*{nome}" required>
+        </div>
+
+        <div>
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" th:field="*{email}" readonly>
+        </div>
+
+        <div>
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" th:field="*{telefone}">
+        </div>
+
+        <input type="hidden" th:field="*{papel}" />
+        <input type="hidden" th:field="*{password}" />
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+</main>
+
+</body> </html>

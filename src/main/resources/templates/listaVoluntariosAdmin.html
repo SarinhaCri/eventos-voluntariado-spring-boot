@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciamento de Voluntários (ADMIN)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    
+    <header>
+        <h1>Gerenciamento de Voluntários</h1>
+        
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <a th:href="@{/admin/dashboard}" class="btn-warning btn-action">Voltar ao Dashboard</a>
+        </div>
+    </header>
+
+    <main>
+        <h2>Lista de Voluntários Cadastrados</h2>
+        
+        <div th:if="${mensagemSucesso}" class="alert alert-success">
+            <p th:text="${mensagemSucesso}"></p>
+        </div>
+        
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Telefone</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="voluntario : ${voluntarios}">
+                    <td th:text="${voluntario.nome}">Nome</td>
+                    <td th:text="${voluntario.email}">email@exemplo.com</td>
+                    <td th:text="${voluntario.telefone}">Telefone</td> 
+                    <td>
+                        <a th:href="@{/admin/voluntarios/editar/{id}(id=${voluntario.id})}" class="btn-edit btn-action" style="padding: 8px 15px; margin-right: 5px;">
+                            Editar
+                        </a>
+                        
+                        <form th:action="@{/admin/voluntarios/deletar/{id}(id=${voluntario.id})}" method="POST" style="display:inline;">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            
+                            <button type="submit" class="btn-delete btn-action" onclick="return confirm('Tem certeza que deseja excluir este voluntário e seus dados?');" style="padding: 8px 15px;">
+                                Excluir
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Plataforma de Eventos Comunitários</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <header>
+        <h1>Eventos Comunitários Ativos</h1>
+        <nav>
+            <div sec:authorize="isAuthenticated()">
+                <a th:href="@{/admin/dashboard}" sec:authorize="hasRole('ADMIN')">Dashboard ADMIN</a>
+                <a th:href="@{/menuVoluntario}" sec:authorize="hasRole('USER')">Minhas Inscrições</a>
+                
+                <a th:href="@{/logout}">Sair</a>
+            </div>
+            <div sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}">Entrar / Cadastrar</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Próximos Eventos</h2>
+        <div th:if="${eventos.isEmpty()}" class="no-events">
+            <p>Nenhum evento cadastrado no momento.</p>
+        </div>
+        
+        <div th:each="evento : ${eventos}" class="event-card">
+            <h3 th:text="${evento.titulo}">Título do Evento</h3>
+            <p><strong>Local:</strong> <span th:text="${evento.local}">Local</span></p>
+            <p><strong>Data:</strong> <span th:text="${#temporals.format(evento.data, 'dd/MM/yyyy HH:mm')}">Data e Hora</span></p>
+            
+            <p>
+                Vagas: <span th:text="${evento.vagas}">100</span> | 
+                Preenchidas: <span th:text="${evento.vagasPreenchidas}">0</span>
+            </p>
+            
+            <div sec:authorize="isAuthenticated()">
+                <a th:href="@{'/app/inscricoes/form/' + ${evento.id}}" class="btn-inscricao">Inscrever-se</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

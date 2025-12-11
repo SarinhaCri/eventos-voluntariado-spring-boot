@@ -1,0 +1,455 @@
+/* ---------------------- 1. VARIÁVEIS DA NOVA PALETA ---------------------- */
+:root {
+    --gradient-main: linear-gradient(135deg, #75BEE7, #705F93, #E43A92);
+    --primary-color: #E43A92; /* Rosa/Púrpura Forte (Ação) */
+    --secondary-color: #75BEE7; /* Azul Suave (Destaque) */
+    --accent-color: #705F93; /* Roxo Intermediário */
+    --bg-light: #FFF4E6;    /* Quase Branco */
+    --bg-soft: #FFB9DA;     /* Rosa Suave (Usado no Header e Login/Signup) */
+    --bg-card: #ffffff80;   /* Branco semi-transparente para o Card de Evento */
+    --bg-card-hover: #ffffffc0; 
+    --text-dark: #1A1A1A;
+    --text-light: #ffffff;
+    --text-muted: #555;
+    --error-color: #f44336; 
+    --spacing-unit: 8px;
+    --border-radius: 15px;
+    --shadow-deep: 0 10px 30px rgba(0, 0, 0, 0.2);
+    --transition-speed: 0.3s;
+}
+
+/* ---------------------------- 2. BASE GERAL ------------------------------ */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--gradient-main);
+    background-attachment: fixed;
+    color: var(--text-dark);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding-top: 120px;
+}
+
+main {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 25px;
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+    margin-bottom: 20px;
+    background-image: var(--gradient-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* CORREÇÃO DE VISIBILIDADE: Título "Eventos Abertos" (h2 dentro de main) */
+main h2 {
+    font-size: 2.2rem;
+    background: none;
+    -webkit-text-fill-color: var(--text-dark); /* Cor do texto escura para contraste */
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7); /* Sombra branca para destacar no fundo */
+}
+
+
+/* --------------------------- 3. HEADER (ESPAÇAMENTO INTERNO AUMENTADO) ----------------------- */
+header {
+    background: var(--bg-soft);
+    /* Aumenta o padding lateral de 25px para 40px para afastar os elementos da borda */
+    padding: 10px 40px; 
+    border-bottom: 3px solid var(--primary-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    
+    gap: 20px; 
+}
+
+/* Garante que o conteúdo não se esprema */
+header > * {
+    flex-shrink: 0;
+}
+
+header h1 {
+    color: var(--text-dark);
+    font-size: 1.4rem;
+    margin: 0;
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: var(--text-dark);
+    text-shadow: none;
+}
+
+header nav a {
+    color: var(--accent-color);
+    font-weight: 600;
+    /* Aumenta a margem entre os links do menu para 15px */
+    margin: 0 15px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+header nav a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* ------------------------------ 4. BOTÕES E LINKS ------------------------------- */
+button, .btn-action, .btn-primary, .btn-warning, .btn-edit {
+    padding: 10px 100px; 
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all var(--transition-speed);
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+/* Botão Primário (Inscrever-se, Cadastrar) */
+.btn-primary, button[type="submit"]:not(.btn-warning) {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    box-shadow: 0 4px 10px rgba(228, 58, 146, 0.4);
+}
+.btn-primary:hover, button[type="submit"]:not(.btn-warning):hover {
+    background-color: #c22d75;
+    transform: translateY(-2px);
+}
+
+/* CORREÇÃO DE VISIBILIDADE: Botão de Aviso (Sair) */
+.btn-warning {
+    background-color: var(--accent-color);
+    color: var(--text-light);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); /* Sombra forte para destacar no Header */
+}
+.btn-warning:hover {
+    background-color: #5d507b;
+    transform: translateY(-1px);
+}
+
+/* Botão de Edição/Entrar (Secundário/Contraste) */
+.btn-edit {
+    background-color: var(--secondary-color);
+    color: var(--text-dark);
+}
+.btn-edit:hover {
+    background-color: #59a6d0;
+    color: var(--text-light);
+}
+
+/* Botão Desabilitado */
+.btn-disabled {
+    background-color: var(--text-muted);
+    color: var(--bg-light);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+.btn-disabled:hover {
+    transform: none;
+}
+
+
+/* ------------------------------ 5. INPUTS -------------------------------- */
+input, textarea, select {
+    background: var(--bg-light);
+    border: 1px solid var(--secondary-color);
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 1rem;
+    width: 100%;
+    color: var(--text-dark);
+    margin-bottom: 18px;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px var(--primary-color);
+}
+
+/* -------------------------- 7. LOGIN/SIGNUP CARD (REVERTIDO PARA O ESTILO PREFERIDO) ------------------------- */
+/* Usado para envolver e centralizar o cartão de login */
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    margin-top: 40px;
+}
+
+/* Estética Original/Preferida */
+.login-card, .signup-card {
+    background: var(--bg-soft); /* Revertido para o fundo Rosa Suave */
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-deep);
+    max-width: 420px;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    border: none;
+}
+
+/* TÍTULO com Efeito de Gradiente (Mantido) */
+.login-card h2, .signup-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    font-weight: 700;
+    background-image: var(--gradient-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.login-link {
+    margin-top: 25px;
+    font-size: 0.95rem;
+}
+
+.login-link a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* ============================ 8. LAYOUT DE CARDS DE EVENTOS (REFINADO) ========================= */
+.event-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px; 
+    margin-top: 30px;
+}
+
+.event-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(5px);
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-top: 5px solid var(--secondary-color); 
+    overflow: hidden; 
+    padding: 0; 
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
+.event-card:hover {
+    transform: translateY(-5px); 
+    background: var(--bg-card-hover);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.event-image-container {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.event-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    transition: transform 0.5s ease;
+}
+
+.event-card:hover .event-image {
+    transform: scale(1.05); 
+}
+
+.card-content {
+    padding: 25px; 
+}
+
+.card-content h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: var(--text-dark); 
+    background: none; 
+    -webkit-text-fill-color: var(--text-dark);
+    text-shadow: none;
+}
+
+.event-info {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+.vagas-status {
+    font-size: 1rem;
+    margin-top: 15px;
+    padding: 5px 0;
+    font-weight: 600;
+}
+
+.vagas-status span[style*="red"] {
+    color: var(--error-color) !important; 
+    font-weight: 700;
+}
+
+.card-divider {
+    border: none;
+    border-top: 1px solid rgba(112, 95, 147, 0.3);
+    margin: 20px 0;
+}
+/* ========================================================================= */
+/* 9. ESTILOS DE PERFIL (PADRONIZAÇÃO) */
+/* ========================================================================= */
+
+/* Estilo para a tabela de dados (usado nas inscrições) */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: var(--bg-card); /* Fundo semi-transparente como o card de evento */
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Para garantir que o border-radius funcione com a tabela */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.data-table th, .data-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(112, 95, 147, 0.2);
+}
+
+.data-table th {
+    background-color: var(--secondary-color); /* Azul suave */
+    color: var(--text-dark);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.data-table tbody tr:hover {
+    background-color: #ffffffc0; /* Destaca a linha ao passar o mouse */
+}
+
+/* Estilo para o botão Cancelar/Excluir */
+.btn-delete {
+    background-color: var(--error-color); /* Vermelho forte para ação perigosa */
+    color: var(--text-light);
+    padding: 8px 15px;
+}
+
+.btn-delete:hover {
+    background-color: #d32f2f;
+    transform: translateY(-1px);
+}
+
+/* Estilo opcional para destacar os dados do perfil */
+.profile-card {
+    padding: 30px;
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.profile-card p {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+.profile-card strong {
+    color: var(--accent-color);
+}
+/* ========================================================================= */
+/* 10. ESTILOS DO DASHBOARD ADMIN */
+/* ========================================================================= */
+
+/* Grid para as métricas */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-top: 25px;
+}
+
+/* Card individual de métrica */
+.metric-card {
+    background: var(--bg-card); /* Fundo semi-transparente */
+    backdrop-filter: blur(5px);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-top: 5px solid var(--primary-color);
+    transition: transform 0.3s;
+}
+
+.metric-card:hover {
+    transform: translateY(-3px);
+    background: var(--bg-card-hover);
+}
+
+.metric-card h3 {
+    font-size: 1.2rem;
+    color: var(--text-dark); /* Cor sólida para título do card */
+    background: none;
+    -webkit-text-fill-color: var(--text-dark);
+    text-shadow: none;
+    margin-bottom: 10px;
+}
+
+.metric-card p {
+    font-size: 3.5rem; /* Número grande de destaque */
+    font-weight: 700;
+    margin: 0;
+    /* Efeito de gradiente para os números principais */
+    background-image: var(--gradient-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Links de Gerenciamento */
+.management-links {
+    margin-top: 40px;
+    padding: 30px;
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.management-links h3 {
+    color: var(--text-dark);
+    background: none;
+    -webkit-text-fill-color: var(--text-dark);
+    text-shadow: none;
+    margin-bottom: 20px;
+}
+
+.management-links ul {
+    list-style: none;
+    padding: 0;
+    display: flex; 
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.management-links ul li {
+    margin-bottom: 10px;
+}
+.management-links ul li a {
+    
+    display: inline-block;
+    min-width: 250px;
+    text-align: left;
+    padding: 12px 20px;
+}

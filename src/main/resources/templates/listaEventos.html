@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Eventos Disponíveis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <header>
+        <h1>Eventos Disponíveis para Voluntariado</h1>
+        
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <nav>
+                <a th:href="@{/listaEventos}">Eventos</a>
+                <a sec:authorize="hasRole('USER')" th:href="@{/app/perfil}">Meu Perfil</a> 
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/dashboard}">Painel Admin</a>
+            </nav>
+            
+            <div style="display: flex; gap: 10px;">
+                <div sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post" style="display:inline;">
+                        <button type="submit" class="btn-warning btn-action">Sair</button>
+                    </form>
+                </div>
+                
+                <div sec:authorize="!isAuthenticated()" style="display:inline-block; display: flex; gap: 10px;">
+                    <a th:href="@{/login}" class="btn-edit btn-action">Entrar</a>
+                    <a th:href="@{/signup}" class="btn-primary btn-action">Cadastrar</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h2>Eventos Abertos</h2>
+        
+        <div th:if="${mensagemSucesso}" class="alert alert-success">
+            <p th:text="${mensagemSucesso}"></p>
+        </div>
+        <div th:if="${mensagemErro}" class="alert alert-error">
+            <p th:text="${mensagemErro}"></p>
+        </div>
+
+        <div th:if="${eventos == null or #lists.isEmpty(eventos)}" style="text-align: center; padding: 40px; background: var(--bg-card); border-radius: var(--border-radius); margin-top: 20px;">
+            <p>Nenhum evento disponível no momento.</p>
+        </div>
+
+        <div th:unless="${eventos == null or #lists.isEmpty(eventos)}" class="event-grid">
+            
+            <div th:each="evento : ${eventos}" class="event-card">
+                
+                <div class="event-image-container">
+                    <img th:src="${evento.imageUrl != null ? evento.imageUrl : '/images/placeholder.jpg'}" 
+                         th:alt="'Imagem do evento ' + ${evento.nome}"
+                         class="event-image">
+                </div>
+
+                <div class="card-content">
+                    
+                    <h3>[[${evento.nome}]]</h3>
+                    
+                    <hr class="card-divider">
+
+                    <div class="event-info">
+                        <strong>Data e Hora:</strong> 
+                        <span th:text="${evento.dataHora != null ? #temporals.format(evento.dataHora, 'dd/MM/yyyy HH:mm') : 'N/A'}"></span>
+                    </div>
+                    
+                    <div class="event-info">
+                        <strong> Local:</strong> <span th:text="${evento.local}"></span>
+                    </div>
+
+                    <div class="vagas-status" style="margin-top: 15px;">
+                        <strong>Vagas:</strong>
+                        <span th:with="inscritos=(${evento.voluntarios != null} ? ${evento.voluntarios.size()} : 0)">
+                            <span th:text="${inscritos}">0</span> / <span th:text="${evento.vagas}">0</span>
+                            <span th:if="${inscritos >= evento.vagas}" style="color:red; font-weight:bold;">(LOTADO)</span>
+                        </span>
+                    </div>
+                    
+                    <hr class="card-divider">
+
+                    <div sec:authorize="isAuthenticated()" style="margin-top: 20px; text-align: center;">
+                        
+                        <div sec:authorize="hasRole('USER')">
+                            <form th:action="@{/app/inscrever/{id}(id=${evento.id})}" method="POST" style="display:block;">
+                                <button type="submit" 
+                                    th:with="inscritos=(${evento.voluntarios != null} ? ${evento.voluntarios.size()} : 0)"
+                                    th:disabled="${inscritos >= evento.vagas}"
+                                    th:classappend="${inscritos >= evento.vagas} ? 'btn-disabled' : 'btn-primary'"
+                                    class="btn-action"
+                                    style="width: 100%;">
+                                    
+                                    <span th:if="${inscritos >= evento.vagas}">Vagas Esgotadas</span>
+                                    <span th:unless="${inscritos >= evento.vagas}">Inscrever-se</span>
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div sec:authorize="hasRole('ADMIN')">
+                            <p style="color: var(--text-muted); font-size: 0.9em;">
+                                (Gerenciar no Painel)
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div sec:authorize="!isAuthenticated()" style="margin-top: 20px; text-align: center;">
+                         <a th:href="@{/login}" class="btn-primary btn-action" style="width:100%;">
+                            Faça Login para Inscrever-se
+                         </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </main>
+</body>
+</html>
